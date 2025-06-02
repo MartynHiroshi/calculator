@@ -1,8 +1,10 @@
-import { useState } from "react";
 import "./index.css";
+import { useState } from "react";
 
 export default function Calculator() {
   const [result, setResult] = useState("0");
+  const operators = ["/", "*", "-", "+"];
+  const operatorsRegEx = new RegExp(`[${operators.map((op) => "\\" + op).join("")}]`);
 
   function clearInput() {
     setResult("0");
@@ -11,20 +13,16 @@ export default function Calculator() {
   function deleteSymbol() {
     if (result.length == 1) {
       setResult("0");
-    } else if (isMethodLast()) {
-      setResult((previous) => previous.slice(0, -3));
     } else {
       setResult((previous) => previous.slice(0, -1));
     }
   }
 
-  function addMethodSymbol(method) {
-    if (isMethodLast()) {
-      setResult((previous) => previous.slice(0, -3) + method);
-    } else if (getLastSymbol() === ".") {
-      setResult((previous) => previous.slice(0, -1) + method);
+  function addMethodSymbol(operator) {
+    if (isOperatorLast() || getLastSymbol() === ".") {
+      setResult((previous) => previous.slice(0, -1) + operator);
     } else {
-      setResult((previous) => previous + method);
+      setResult((previous) => previous + operator);
     }
   }
 
@@ -37,27 +35,51 @@ export default function Calculator() {
   }
 
   function addPoint() {
-    if (getLastSymbol() === " ") {
+    if (isOperatorLast()) {
       setResult((previous) => previous + "0.");
-    } else if (getLastSymbol() !== ".") {
+    } else if (!isResultHasPoints()) {
       setResult((previous) => previous + ".");
     }
   }
 
+  function isResultHasPoints() {
+    const numbersArr = result.split(operatorsRegEx);
+    return numbersArr[numbersArr.length - 1].includes(".");
+  }
+
   function calculateResult() {
-    if (getLastSymbol() === " ") {
-      setResult((previous) => previous.slice(0, -3));
+    if (isOperatorLast()) {
+      setResult((previous) => previous.slice(0, -1));
     }
     setResult((previous) => eval(previous).toString());
   }
 
-  function isMethodLast() {
-    return getLastSymbol() === " ";
+  function isOperatorLast() {
+    return operators.includes(getLastSymbol());
   }
 
   function getLastSymbol() {
     return result[result.length - 1];
   }
+
+  const buttons = [
+    { label: "7", key: "7", method: () => addDigit("7") },
+    { label: "8", key: "8", method: () => addDigit("8") },
+    { label: "9", key: "9", method: () => addDigit("9") },
+    { label: "+", key: "+", method: () => addMethodSymbol("+"), className: "operator" },
+    { label: "4", key: "4", method: () => addDigit("4") },
+    { label: "5", key: "5", method: () => addDigit("5") },
+    { label: "6", key: "6", method: () => addDigit("6") },
+    { label: "-", key: "-", method: () => addMethodSymbol("-"), className: "operator" },
+    { label: "1", key: "1", method: () => addDigit("1") },
+    { label: "2", key: "2", method: () => addDigit("2") },
+    { label: "3", key: "3", method: () => addDigit("3") },
+    { label: "×", key: "*", method: () => addMethodSymbol("*"), className: "operator" },
+    { label: "0", key: "0", method: () => addDigit("0") },
+    { label: ".", key: ".", method: addPoint },
+    { label: "=", key: "=", method: calculateResult, className: "equals" },
+    { label: "÷", key: "/", method: () => addMethodSymbol("/"), className: "operator" },
+  ];
 
   return (
     <div className="calculator-container">
@@ -72,39 +94,12 @@ export default function Calculator() {
           </button>
         </div>
         <div className="buttons">
-          <button onClick={() => addDigit("7")}>7</button>
-          <button onClick={() => addDigit("8")}>8</button>
-          <button onClick={() => addDigit("9")}>9</button>
-          <button className="operator" onClick={() => addMethodSymbol(" + ")}>
-            +
-          </button>
-          <button onClick={() => addDigit("4")}>4</button>
-          <button onClick={() => addDigit("5")}>5</button>
-          <button onClick={() => addDigit("6")}>6</button>
-          <button className="operator" onClick={() => addMethodSymbol(" - ")}>
-            -
-          </button>
-          <button onClick={() => addDigit("1")}>1</button>
-          <button onClick={() => addDigit("2")}>2</button>
-          <button onClick={() => addDigit("3")}>3</button>
-          <button className="operator" onClick={() => addMethodSymbol(" * ")}>
-            ×
-          </button>
-          <button onClick={() => addDigit("0")}>0</button>
-          <button onClick={() => addPoint()}>.</button>
-          <button className="equals" onClick={() => calculateResult()}>
-            =
-          </button>
-          <button className="operator" onClick={() => addMethodSymbol(" / ")}>
-            ÷
-          </button>
+          {buttons.map((item, index) => (
+            <button key={index} className={item.className} onClick={item.method}>
+              {item.label}
+            </button>
+          ))}
         </div>
-      </div>
-
-      <div className="technologies-used">
-        <p>
-          <strong>Technologies used:</strong> React, JSX, CSS Modules, JavaScript (useState, events handling)
-        </p>
       </div>
     </div>
   );

@@ -106,22 +106,3 @@ button {
 .equals:hover {
   background-color: #2ecc71;
 }
-
-/* Стили для сноски с технологиями */
-.technologies-used {
-  margin-top: 20px;
-  font-size: 0.9rem;
-  color: #bbbbbb;
-  background-color: #222;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.technologies-used p {
-  width: 250px;
-  margin: 0 auto;
-  padding: 0;
-  opacity: 0.6;
-}
