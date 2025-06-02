@@ -40,7 +40,7 @@ export default function Calculator() {
   const getLastSymbol = () => result[result.length - 1];
 
   const operators = ["+", "-", "*", "/"];
-  
+
   const buttons = [
     { label: "C", key: "C", method: clearInput, className: "clear" },
     { label: "⌫", key: "⌫", method: deleteSymbol, className: "delete" },
@@ -67,8 +67,8 @@ export default function Calculator() {
       <div className="calculator">
         <div className="display">{result}</div>
         <div className="buttons">
-          {buttons.map((item, index) => (
-            <button key={index} className={item.className} onClick={item.method}>
+          {buttons.map((item) => (
+            <button key={item.key} className={item.className} onClick={item.method}>
               {item.label}
             </button>
           ))}
