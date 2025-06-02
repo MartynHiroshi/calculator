@@ -63,22 +63,22 @@ export default function Calculator() {
   }
 
   const buttons = [
-    { label: "7", key: "7", method: () => addDigit("7") },
-    { label: "8", key: "8", method: () => addDigit("8") },
-    { label: "9", key: "9", method: () => addDigit("9") },
-    { label: "+", key: "+", method: () => addMethodSymbol("+"), className: "operator" },
-    { label: "4", key: "4", method: () => addDigit("4") },
-    { label: "5", key: "5", method: () => addDigit("5") },
-    { label: "6", key: "6", method: () => addDigit("6") },
-    { label: "-", key: "-", method: () => addMethodSymbol("-"), className: "operator" },
-    { label: "1", key: "1", method: () => addDigit("1") },
-    { label: "2", key: "2", method: () => addDigit("2") },
-    { label: "3", key: "3", method: () => addDigit("3") },
-    { label: "×", key: "*", method: () => addMethodSymbol("*"), className: "operator" },
-    { label: "0", key: "0", method: () => addDigit("0") },
-    { label: ".", key: ".", method: addPoint },
-    { label: "=", key: "=", method: calculateResult, className: "equals" },
-    { label: "÷", key: "/", method: () => addMethodSymbol("/"), className: "operator" },
+    { label: "7", method: () => addDigit("7") },
+    { label: "8", method: () => addDigit("8") },
+    { label: "9", method: () => addDigit("9") },
+    { label: "+", method: () => addMethodSymbol("+"), className: "operator" },
+    { label: "4", method: () => addDigit("4") },
+    { label: "5", method: () => addDigit("5") },
+    { label: "6", method: () => addDigit("6") },
+    { label: "-", method: () => addMethodSymbol("-"), className: "operator" },
+    { label: "1", method: () => addDigit("1") },
+    { label: "2", method: () => addDigit("2") },
+    { label: "3", method: () => addDigit("3") },
+    { label: "×", method: () => addMethodSymbol("*"), className: "operator" },
+    { label: "0", method: () => addDigit("0") },
+    { label: ".", method: addPoint },
+    { label: "=", method: calculateResult, className: "equals" },
+    { label: "÷", method: () => addMethodSymbol("/"), className: "operator" },
   ];
 
   return (
